@@ -1,0 +1,11 @@
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\obj\Debug\netcoreapp2.2\TicTacToe.csprojAssemblyReference.cache
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\obj\Debug\netcoreapp2.2\TicTacToe.csproj.CoreCompileInputs.cache
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\obj\Debug\netcoreapp2.2\TicTacToe.AssemblyInfoInputs.cache
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\obj\Debug\netcoreapp2.2\TicTacToe.AssemblyInfo.cs
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\bin\Debug\netcoreapp2.2\TicTacToe.deps.json
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\bin\Debug\netcoreapp2.2\TicTacToe.runtimeconfig.json
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\bin\Debug\netcoreapp2.2\TicTacToe.runtimeconfig.dev.json
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\bin\Debug\netcoreapp2.2\TicTacToe.dll
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\bin\Debug\netcoreapp2.2\TicTacToe.pdb
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\obj\Debug\netcoreapp2.2\TicTacToe.dll
+C:\Users\user\Documents\VsCode\Projects\TicTacToe\obj\Debug\netcoreapp2.2\TicTacToe.pdb
