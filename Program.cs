@@ -10,6 +10,7 @@ class Program
             {"_", "_", "_"},
             {"_", "_", "_"},
         };
+    static int counter = 0;
 
     static void Main(string[] args)
     {
@@ -26,7 +27,7 @@ class Program
         for (int i = 0; i < refArray.GetLength(0); i++) {
             Console.Write("\t \t \t");
             for (int j = 0; j < refArray.GetLength(1); j++) {
-                Console.Write(" {0} ", refArray[i, j]);
+                Console.Write($" {refArray[i, j]} ");
             }
             Console.Write(Environment.NewLine);
         }
@@ -35,52 +36,98 @@ class Program
 
     public static void Game(string[,] refArray)
     {
+        bool flag = false;
 
-        while (true) {
+        while (!flag) {
             PrintMatrix(refArray);
 
+            int conditions = WinCondition(refArray);
 
-            if (WinCondition(refArray)) {
-                Console.WriteLine("You Win!");
-                Console.Write("Play Again? (y/n)  ");
-                char input = Convert.ToChar(Console.ReadLine());
-                if (input == 'y') {
-                    ResetGame();
-                }
-                else{
-                    Console.WriteLine("Good Bye!");
+            if (conditions != -1)
+                if (!Restart(conditions))
                     break;
-                }
-            }
 
             PlayerTurn(refArray);
             AiTurn(refArray);
         }
     }
 
-    public static bool WinCondition(string[,] array2D)
+    public static int WinCondition(string[,] array2D)
     {
+        var ongoingSession = -1;
+        var draw = 0;
+        var win = 1;
+        var lose = 2;
+        var emptyTile = 9;
+
+        // Column Check
         for (int i = 0; i < array2D.GetLength(0); i++) {
-            for (int j = 1; j < array2D.GetLength(1); j++) {
-                if (array2D[0, i] == array2D[j, i] && array2D[0, i] != "_") {
-                    if (j == 2)
-                        return true;
+            for (int j = 0; j < array2D.GetLength(1); j++) {
+                if (array2D[j, i] == array2D[j + 1, i] && array2D[j, i] != "_") {
+                    if (j == 1) {
+                        if (array2D[j + 1, i] == "X")
+                            return win;
+                        else
+                            return lose;
+                    }
                 }
-                else if (array2D[i, 0] == array2D[i, j] && array2D[0, i] != "_") {
-                    if (j == 2)
-                        return true;
+                else
+                    break;
+            }
+        }
+        // Row Check
+        for (int i = 0; i < array2D.GetLength(0); i++) {
+            for (int j = 0; j < array2D.GetLength(1); j++) {
+                if (array2D[i, j] == array2D[i, j + 1] && array2D[i, j] != "_") {
+                    if (j == 1) {
+                        if (array2D[j + 1, i] == "X")
+                            return win;
+                        else
+                            return lose;
+                    }
                 }
                 else
                     break;
             }
         }
 
+        // Diagonal Check
         if (array2D[0, 0] == array2D[1, 1] && array2D[0, 0] == array2D[2, 2] && array2D[0, 0] != "_")
-            return true;
+            return win;
         else if (array2D[2, 0] == array2D[1, 1] && array2D[2, 0] == array2D[0, 2] && array2D[1, 1] != "_")
-            return true;
+            return win;
 
-        return false;
+        // Draw Check
+        for (int i = 0; i < array2D.GetLength(0); i++) {
+            for (int j = 0; j < array2D.GetLength(1); j++)
+                if (array2D[i, j] != "_")
+                    emptyTile--;
+            if (emptyTile == 0)
+                return draw;
+        }
+        return ongoingSession;
+    }
+
+    public static bool Restart(int conditions)
+    {
+        if (conditions == 1)
+            Console.WriteLine("You won!");
+        else if (conditions == 2)
+            Console.WriteLine("You lost!");
+        else
+            Console.WriteLine("Draw!");
+
+        Console.Write("Play Again? (y/n)  ");
+        char input = Convert.ToChar(Console.ReadLine());
+
+        if (input == 'y') {
+            ResetGame();
+            return true;
+        }
+        else {
+            Console.WriteLine("Good Bye!");
+            return false;
+        }
     }
 
     public static void ResetGame()
@@ -90,6 +137,7 @@ class Program
             { "_", "_", "_"},
             { "_", "_", "_"},
         };
+        counter = 0;
 
         for (int i = 0; i < originalArray.GetLength(0); i++) {
             for (int j = 0; j < originalArray.GetLength(1); j++)
@@ -107,10 +155,13 @@ class Program
             int aiTurnX = rand.Next(0, 3);
             int aiTurnY = rand.Next(0, 3);
 
-            if (array2D[aiTurnX, aiTurnY] != "X" && array2D[aiTurnX, aiTurnY] != "O") {
+            if (array2D[aiTurnX, aiTurnY] == "_") { // Checking for empty tiles
                 array2D[aiTurnX, aiTurnY] = "O";
                 conditionMet = true;
+                counter++;
             }
+            if (counter == 4 || counter == 5)   // Prevents the endless loop 
+                conditionMet = true;
         }
         Console.WriteLine("AI's turn...");
         System.Threading.Thread.Sleep(1000);
@@ -127,16 +178,13 @@ class Program
             tempX = int.Parse(Console.ReadLine());
             tempY = int.Parse(Console.ReadLine());
 
-            if (refArray[tempX, tempY] != "O" && refArray[tempX, tempY] != "X") {
+            if (refArray[tempX, tempY] == "_") {
                 refArray[tempX, tempY] = "X";
                 condition = true;
             }
             else
                 Console.WriteLine("Those coordinates are taken, Please choose some other ones.");
-            
-
         }
         PrintMatrix(refArray);
     }
-
 }
